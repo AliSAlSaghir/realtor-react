@@ -1,9 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthButton from "../components/AuthButton";
+import { toast } from "react-toastify";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 function ForgotPassword() {
   const [email, setEmail] = useState();
+
+  async function handleForgotPassword(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Email sent successfully");
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  }
 
   return (
     <section>
@@ -17,7 +30,7 @@ function ForgotPassword() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] ml-20">
-          <form>
+          <form onSubmit={handleForgotPassword}>
             <input
               type="email"
               className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
