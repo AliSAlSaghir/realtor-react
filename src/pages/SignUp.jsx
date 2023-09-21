@@ -5,7 +5,7 @@ import AuthButton from "../components/AuthButton";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile,
+  //updateProfile,
 } from "firebase/auth";
 import { serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -26,7 +26,7 @@ function SignUp() {
     setFormData(data => ({ ...data, [e.target.id]: e.target.value }));
   }
 
-  async function handleSubmit(e) {
+  async function handleSignUp(e) {
     e.preventDefault();
     try {
       const auth = getAuth();
@@ -40,13 +40,12 @@ function SignUp() {
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
       await setDoc(doc(db, "users", user.uid), formDataCopy);
-      updateProfile(auth.currentUser, {
-        displayName: name,
-      });
-      toast.success("registeration successfully completed!");
+      // updateProfile(auth.currentUser, {
+      //   displayName: name,
+      // });
       navigate("/");
     } catch (error) {
-      toast.error("Something went wrong!!");
+      toast.error("Something went wrong!");
     }
   }
 
@@ -62,7 +61,7 @@ function SignUp() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] ml-20">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSignUp}>
             <input
               type="text"
               className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
