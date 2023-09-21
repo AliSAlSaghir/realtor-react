@@ -64,7 +64,7 @@ function ForgotPassword() {
             >
               Send reset password
             </button>
-            <div className="my-4 before:border-t before:border-gray-300 flex flex-1 items-center after:border-t after:border-gray-300">
+            <div className="my-4 before:border-t before:border-gray-300 flex before:flex-1 after:flex-1 items-center after:border-t after:border-gray-300">
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
             <AuthButton />

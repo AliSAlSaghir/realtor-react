@@ -5,7 +5,7 @@ import AuthButton from "../components/AuthButton";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  //updateProfile,
+  updateProfile,
 } from "firebase/auth";
 import { serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -40,9 +40,9 @@ function SignUp() {
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
       await setDoc(doc(db, "users", user.uid), formDataCopy);
-      // updateProfile(auth.currentUser, {
-      //   displayName: name,
-      // });
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
       navigate("/");
     } catch (error) {
       toast.error("Something went wrong!");
@@ -124,7 +124,7 @@ function SignUp() {
             >
               Sign up
             </button>
-            <div className="my-4 before:border-t before:border-gray-300 flex flex-1 items-center after:border-t after:border-gray-300">
+            <div className="my-4 before:border-t before:border-gray-300 flex before:flex-1 after:flex-1 items-center after:border-t after:border-gray-300">
               <p className="text-center font-semibold mx-4">OR</p>
             </div>
             <AuthButton />
