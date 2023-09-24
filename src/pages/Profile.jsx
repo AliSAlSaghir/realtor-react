@@ -1,21 +1,54 @@
 import { getAuth, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
-import { useState } from "react";
+import {
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FcHome } from "react-icons/fc";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import ListingItem from "../components/ListingItem";
 
 function Profile() {
   const auth = getAuth();
   const navigate = useNavigate();
+  const [listings, setListings] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [changeName, setChangeName] = useState(false);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
   });
   const { name, email } = formData;
+
+  useEffect(() => {
+    async function fetchUserListings() {
+      const listingRef = collection(db, "listings");
+      const q = query(
+        listingRef,
+        where("userRef", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
+      );
+      const querySnap = await getDocs(q);
+      let listings = [];
+      querySnap.forEach(doc => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+      setListings(listings);
+      setIsLoading(false);
+    }
+    fetchUserListings();
+  }, [auth.currentUser.uid]);
 
   function handleLogOut() {
     auth.signOut();
@@ -102,6 +135,22 @@ function Profile() {
           </button>
         </div>
       </section>
+      <div className="max-w-6xl px-3 mt-6 mx-auto">
+        {!isLoading && listings.length > 0 && (
+          <>
+            <h2 className="text-2xl text-center font-semibold">My Listings</h2>
+            <ul>
+              {listings.map(listing => (
+                <ListingItem
+                  id={listing.id}
+                  listing={listing.data}
+                  key={listing.id}
+                />
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </>
   );
 }
