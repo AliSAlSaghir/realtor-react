@@ -1,6 +1,7 @@
 import { getAuth, updateProfile } from "firebase/auth";
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -57,6 +58,18 @@ function Profile() {
 
   function handleChange(e) {
     setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  }
+
+  async function handleDeleting(id) {
+    if (!window.confirm("Are you sure you want to delete")) return;
+    await deleteDoc(doc(db, "listings", id));
+    const updatedListings = listings.filter(listing => listing.id !== id);
+    setListings(updatedListings);
+    toast.success("Listing successfully deleted");
+  }
+
+  function handleEditing(id) {
+    navigate(`/edit-listing/${id}`);
   }
 
   async function handleChangeName() {
@@ -147,6 +160,8 @@ function Profile() {
                   id={listing.id}
                   listing={listing.data}
                   key={listing.id}
+                  handleDeleting={handleDeleting}
+                  handleEditing={handleEditing}
                 />
               ))}
             </ul>
