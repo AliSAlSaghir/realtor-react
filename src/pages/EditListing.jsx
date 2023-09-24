@@ -179,10 +179,8 @@ function EditListing() {
     };
     delete formDataCopy.images;
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
-    const docRef = await updateDoc(
-      doc(db, "listings", params.listingId),
-      formDataCopy
-    );
+    const docRef = doc(db, "listings", params.listingId);
+    await updateDoc(docRef, formDataCopy);
     setLoading(false);
     toast.success("Listing successfully updated");
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
