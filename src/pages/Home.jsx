@@ -115,7 +115,7 @@ function Home() {
   }, []);
 
   if (isLoading) return <Spinner />;
-  if (listings.length === 0) return <></>;
+  if (listings?.length === 0) return <></>;
   return (
     listings && (
       <div>
@@ -130,13 +130,13 @@ function Home() {
           }}
           modules={[Autoplay, Navigation, Pagination, EffectFade]}
         >
-          {listings.map(({ data, id }) => (
+          {listings?.map(({ data, id }) => (
             <SwiperSlide
               key={id}
               onClick={() => navigate(`/category/${data.type}/${id}`)}
             >
               <div
-                className="relative w-full overflow-hidden h-[300px]"
+                className="relative w-full overflow-hidden h-[400px]"
                 style={{
                   background: `url(${data.imgUrls[0]}}) center no-repeat`,
                   backgroundSize: "cover",
@@ -163,11 +163,11 @@ function Home() {
                   Show more offers
                 </p>
               </Link>
-              <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+              <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {offerListings.map(listing => (
                   <ListingItem
                     key={listing.id}
-                    data={listing.data}
+                    listing={listing.data}
                     id={listing.id}
                   />
                 ))}
@@ -184,11 +184,11 @@ function Home() {
                   Show more places for rent
                 </p>
               </Link>
-              <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+              <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {rentListings.map(listing => (
                   <ListingItem
                     key={listing.id}
-                    data={listing.data}
+                    listing={listing.data}
                     id={listing.id}
                   />
                 ))}
@@ -205,11 +205,11 @@ function Home() {
                   Show more places for sale
                 </p>
               </Link>
-              <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+              <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {saleListings.map(listing => (
                   <ListingItem
                     key={listing.id}
-                    data={listing.data}
+                    listing={listing.data}
                     id={listing.id}
                   />
                 ))}

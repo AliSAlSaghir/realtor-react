@@ -37,7 +37,7 @@ function ForgotPassword() {
               id="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="email address"
+              placeholder="Email address"
             />
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <p className="mb-6">

@@ -61,7 +61,7 @@ function Offers() {
       querySnap.forEach(listing =>
         listings.push({ id: listing.id, data: listing.data() })
       );
-      setListings(prev => ({ ...prev, ...listings }));
+      setListings(prev => [...prev, ...listings]);
       setIsLoading(false);
     } catch (err) {
       toast.error("Could not fetch listings");

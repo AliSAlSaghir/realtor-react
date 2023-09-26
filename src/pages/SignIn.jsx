@@ -46,14 +46,14 @@ function SignIn() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] ml-20">
-          <form onClick={handleSignIn}>
+          <form onSubmit={handleSignIn}>
             <input
               type="email"
               className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               id="email"
               value={email}
               onChange={handleChange}
-              placeholder="email address"
+              placeholder="Email address"
             />
             <div className="relative mb-6">
               <input

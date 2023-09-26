@@ -39,7 +39,7 @@ function Listing() {
     fetchListing();
   }, [navigate, params.listingId]);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || !listing) return <Spinner />;
   return (
     <main>
       <Swiper
@@ -56,7 +56,7 @@ function Listing() {
         {listing?.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
             <div
-              className="relative w-full overflow-hidden h-[300px]"
+              className="relative w-full overflow-hidden h-[400px]"
               style={{
                 background: `url(${url}) center no-repeat`,
                 backgroundSize: "cover",
@@ -86,7 +86,7 @@ function Listing() {
       <div className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5">
         <div className="w-full">
           <p className="text-2xl font-bold mb-3 text-blue-900">
-            {listing.name} - ${"  "}
+            {listing.name} - $
             {listing.offer
               ? listing.discountedPrice
                   .toString()
