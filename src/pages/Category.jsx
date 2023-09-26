@@ -76,6 +76,9 @@ function Category() {
       listings={listings}
       handleLoadMore={handleLoadMore}
       lastFetchedListing={lastFetchedListing}
+      categoryType={
+        params.categoryType === "rent" ? "places for rent" : "places for sale"
+      }
     >
       {params.categoryType === "rent" ? "Places for rent" : "Places for sale"}
     </Preview>

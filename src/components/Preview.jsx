@@ -6,6 +6,7 @@ function Preview({
   listings,
   lastFetchedListing,
   handleLoadMore,
+  categoryType,
   children,
 }) {
   return (
@@ -38,7 +39,7 @@ function Preview({
           )}
         </>
       ) : (
-        <p>There are no current offers</p>
+        <p>There are no current {categoryType}</p>
       )}
     </div>
   );

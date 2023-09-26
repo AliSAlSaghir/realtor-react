@@ -74,6 +74,7 @@ function Offers() {
       listings={listings}
       handleLoadMore={handleLoadMore}
       lastFetchedListing={lastFetchedListing}
+      categoryType="offers"
     >
       Offers
     </Preview>
