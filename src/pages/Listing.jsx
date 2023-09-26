@@ -61,9 +61,7 @@ function Listing() {
                 background: `url(${url}) center no-repeat`,
                 backgroundSize: "cover",
               }}
-            >
-              hi
-            </div>
+            ></div>
           </SwiperSlide>
         ))}
       </Swiper>
