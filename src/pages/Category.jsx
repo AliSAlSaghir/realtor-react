@@ -11,11 +11,13 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import Preview from "../components/Preview";
+import { useParams } from "react-router";
 
-function Offers() {
+function Category() {
   const [listings, setListings] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
+  const params = useParams();
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,7 +26,7 @@ function Offers() {
         const listingRef = collection(db, "listings");
         const q = query(
           listingRef,
-          where("offer", "==", true),
+          where("type", "==", params.categoryType),
           orderBy("timestamp", "desc"),
           limit(8)
         );
@@ -42,14 +44,14 @@ function Offers() {
       }
     }
     fetchListings();
-  }, []);
+  }, [params.categoryType]);
 
   async function handleLoadMore() {
     try {
       const listingRef = collection(db, "listings");
       const q = query(
         listingRef,
-        where("offer", "==", true),
+        where("type", "==", params.categoryType),
         orderBy("timestamp", "desc"),
         startAfter(lastFetchedListing),
         limit(4)
@@ -75,9 +77,9 @@ function Offers() {
       handleLoadMore={handleLoadMore}
       lastFetchedListing={lastFetchedListing}
     >
-      Offers
+      {params.categoryType === "rent" ? "Places for rent" : "Places for sale"}
     </Preview>
   );
 }
 
-export default Offers;
+export default Category;
